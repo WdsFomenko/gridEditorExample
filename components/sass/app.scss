@@ -1,0 +1,295 @@
+@import "compass";
+body,html, h1, p{
+  margin: 0;
+  padding: 0;
+  border-collapse: collapse;
+  font-size: 100%;
+  font-family: "Lucida Grande", "Helvetica Nueue", Arial, sans-serif;
+}
+html,body{
+  height: 100%;
+}
+.activeUser{
+  color:white;
+  cursor:pointer ;
+  background-color: lightblue;
+}
+.statusResponseError{
+  border-color: red;
+  @include box-shadow(0 0 5px red);
+}
+.statusResponseSuccess{
+  border-color: green;
+  @include box-shadow(0 0 5px green);
+}
+#messageResponse{
+  display: none;
+  position: absolute;
+  top: 20%;
+  left: 40% ;
+  z-index: 2;
+  font-size: 0.8em;
+  width: 30% ;
+  min-height: 130px;
+  padding: 15px 10px 0 10px;
+  color: #ffffff;
+  text-align: center;
+  background-color: #56789e;
+  border-width: 2px;
+  border-style: solid;
+  @include border-radius(5%);
+  div{
+    &:first-child{
+      border-bottom-width: 1px;
+      border-bottom-style: solid;
+      border-bottom-color: inherit;
+      height: 30px;
+    }
+    &:last-child{
+      font-size: 1.1em;
+      padding-top: 40px ;
+    }
+  }
+}
+#editForm{
+  display: none;
+//  display: block;
+  position: absolute;
+  top: 20%;
+  left: 40% ;
+  z-index: 2;
+  font-size: 0.8em;
+  width: 30% ;
+  min-height: 330px;
+  padding: 15px 10px 0 10px;
+  background-color: #56789e;
+  @include border-radius(5%);
+  fieldset{
+    color: white;
+    position: relative;
+    #closeForm{
+      position: absolute;
+      top: -2%;
+      right:0;
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      line-height: 20px;
+      background-color: darkslategray;
+      color: #ffffff;
+      font-weight: bold;
+      @include border-radius(50%);
+      &:hover{
+        cursor: pointer;
+        @include box-shadow(0 0 3px blue)
+      }
+    }
+    legend{
+      color: #b3d4fc;
+    }
+    .formData{
+      margin-top: 10px ;
+      position: relative;
+      text-align: right;
+      input{
+        &:focus{
+          outline: 1px solid blue;
+          @include box-shadow(0 0 10px blue);
+        }
+        &.ng-dirty.ng-invalid{
+          outline: 1px solid red;
+          @include box-shadow(0 0 10px red) ;
+        }
+        &.ng-dirty.ng-valid{
+          outline: 1px solid green;
+          @include box-shadow(0 0 10px green) ;
+        }
+      }
+      button{
+        display: inline-block;
+        &:hover{
+          @include box-shadow(0 0 5px #105cb6);
+        }
+        &:before{
+          content: '';
+          display: block;
+          clear: both;
+        }
+      }
+      label{
+        display: inline-block;
+        text-align: left;
+        width: 50%;
+      }
+    }
+  }
+}
+#wraper{
+  max-width: 1100px ;
+  margin: 0 auto;
+  min-height: 550px;
+  border: 1px solid #d0b29a;
+  background-color: #666666;
+  position: relative;
+  #editBg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    @include opacity(0.5);
+    display: none;
+//    display: block;
+  }
+  footer{
+    background-color: #f1edec;
+    color: grey;
+    padding: 10px 15px;
+    font-size: 0.9em;
+  }
+  aside{
+    display: block;
+    width: 170px;
+    height: 100%;
+    float: left;
+    background:  url(../images/logo.png) 10px 10px no-repeat;
+    padding: 100px 5px 0 5px;
+    ul{
+      list-style-type: none;
+      padding: 0;
+      li{
+        margin-bottom: 12px;
+        a{
+          text-decoration: none;
+          color: #ffffff;
+          font-size: 0.8em;
+          display: block;
+          height: 40px;
+          background-color: #666666;
+          text-align: right;
+          padding-right: 10px;
+          &:before{
+            content: "";
+            display: block;
+            float:left;
+            height: 30px;
+            width: 30px;
+            background: #666666 url(../images/bg1.png) 0 0 no-repeat;
+          }
+          &:hover{
+            color: orangered;
+            background:  white linear-gradient(left, rgba(106,106,106,1) 0%, rgba(106,106,106,1) 20%, rgba(106,106,106,0) 60%);
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+  #content{
+    margin-left: 180px;
+    background-color: #fff;
+    max-height: 100%;
+    &:after{
+      content: '';
+      display: block;
+      clear: both ;
+    }
+    header{
+      display: block;
+      background-image: linear-gradient(bottom, rgba(106,106,106,1) 0%, rgba(106,106,106,0) 100%);
+      h1{
+        color: #cc6633;
+        font-size: 1.6em;
+        padding: 20px 20px 20px 20px;
+      }
+      p{
+        color:#ffffff;
+        padding: 0 10px 10px 20px;
+      }
+    }
+    section{
+      width: 98%;
+      height: 100%;
+      margin: 0 auto;
+      background-color: #fff;
+      min-height: 400px;
+      &:after{
+        content: "";
+        display: block;
+        clear: both;
+      }
+      #displayParam{
+        font-size: 0.8em;
+        font-weight: bold;
+        padding: 15px 0;
+        label{
+          margin-left: 50px;
+        }
+        #inAll{
+          width: 40px;
+        }
+      }
+      #tableUsers{
+        border: 1px solid silver ;
+        display: table;
+        font-size: 0.8em ;
+        width: 100%;
+        text-align: center;
+        max-height: 90%;
+        overflow-y: scroll;
+        #tableUsersHeader{
+          display: table-header-group;
+            .tableCells{
+              display: table-cell;
+              border: 1px solid silver;
+              background-color: #f5f5f5;
+              color: slategray;
+            }
+        }
+        #tableUsersInfo{
+          display: table-row-group;
+          .tableRows{
+            display: table-row;
+            color: darkorange ;
+            &:hover{
+               @extend .activeUser;
+            }
+          }
+          .tableCells{
+            display: table-cell;
+            border: 1px solid silver;
+          }
+        }
+      }
+      nav{
+        display: block;
+        text-align: right;
+        width: 100%;
+        padding-top: 15px ;
+        .operationType{
+          display: inline-block;
+          width: 30px;
+          height: 26px;
+          background-color: red;
+          &:hover{
+            @include box-shadow(0 0 2px #003366) ;
+            cursor: pointer;
+          }
+          &#createUser{
+            background: url(../images/create.png) 0 0 no-repeat;
+          }
+          &#cleanUser{
+            background: url(../images/clean.png) 0 0 no-repeat ;
+          }
+          &#editUser{
+            background: url(../images/edit.png) 0 0 no-repeat;
+          }
+          &#deleteUser{
+            background: url(../images/delete.png) 0 0 no-repeat;
+          }
+        }
+      }
+    }
+  }
+}

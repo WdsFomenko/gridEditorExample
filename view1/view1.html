@@ -1,0 +1,139 @@
+<div id="wraper">
+  <aside>
+    <ul>
+      <li><a ng-click="bookCtrlNs.getCustomers()">Импорт данных</a></li>
+      <li><a ng-click="bookCtrlNs.setCustomers()">Создание данных</a></li>
+      <li><a ng-click="bookCtrlNs.deleteCustomers()">Удаление данных</a></li>
+      <li><a ng-click="bookCtrlNs.updateCustomers()">Редактирование данных</a></li>
+      <li><a ng-click="bookCtrlNs.loadLocalDb()">Автономная работа</a>
+      </li>
+    </ul>
+  </aside>
+  <div id="content">
+    <header>
+      <h1>Адресная книга (список пользователей)</h1>
+      <p>Этот сервис предназначен для организации работы с персональными данными пользователей. Здесь вы можете просматривать, редактировать, добавлять или удалать данные.</p>
+    </header>
+    <section>
+      <div id="displayParam">
+        <label for="sortParam">Sort by:</label>
+        <select name="sortParam" id="sortParam" ng-model="bookCtrlNs.sortBy">
+          <option value="Name">Name</option>
+          <option value="Email">Email</option>
+          <option value="Telephone">Telephone</option>
+          <option value="Street">Street</option>
+          <option value="Address">Address</option>
+          <option value="City">City</option>
+          <option value="State">State</option>
+          <option value="Zip">Zip</option>
+        </select>
+        <label for="inAll">In total records:</label>
+        <input type="number" id="inAll"  required ng-model="bookCtrlNs.records"/>
+      </div>
+      <div id="tableUsers">
+        <div id="tableUsersHeader">
+            <div class="tableCells">
+              <span>Name</span>
+            </div>
+          <div class="tableCells">
+            <span>Email</span>
+          </div>
+          <div class="tableCells">
+            <span>Telephone</span>
+          </div>
+          <div class="tableCells">
+            <span>Street</span>
+          </div>
+          <div class="tableCells">
+            <span>Address</span>
+          </div>
+          <div class="tableCells">
+            <span>City</span>
+          </div>
+          <div class="tableCells">
+            <span>State</span>
+          </div>
+          <div class="tableCells">
+            <span>Zip</span>
+          </div>
+        </div>
+        <div id="tableUsersInfo">
+          <div class="tableRows" ng-repeat="items in bookCtrlNs.customers | orderBy:bookCtrlNs.sortBy | limitTo:bookCtrlNs.records" id="{{items.id}}"  ng-click="bookCtrlNs.changeUser(items.id)" ng-class="(items.id==bookCtrlNs.idf)?'activeUser':''" >
+             <div class="tableCells"><span>{{items.Name}}</span></div>
+             <div class="tableCells"><span>{{items.Email}}</span></div>
+             <div class="tableCells"><span>{{items.Telephone}}</span></div>
+             <div class="tableCells"><span>{{items.Street}}</span></div>
+             <div class="tableCells"><span>{{items.Address}}</span></div>
+             <div class="tableCells"><span>{{items.City}}</span></div>
+             <div class="tableCells"><span>{{items.State}}</span></div>
+            <div class="tableCells"><span>{{items.Zip}}</span></div>
+           </div>
+        </div>
+      </div>
+      <nav>
+        <div class="operationType" id="createUser" ng-click="bookCtrlNs.createUser()" title="Создать нового пользователя"></div>
+        <div class="operationType" id="cleanUser" ng-click="bookCtrlNs.cleanId(true)" title="Отменить выделение"></div>
+        <div class="operationType" id="editUser" ng-click="bookCtrlNs.updateUsers()" title="Редактировать запись пользователя"></div>
+        <div class="operationType" id="deleteUser" ng-click="bookCtrlNs.deleteUsers()" title="Удалить запись"></div>
+      </nav>
+    </section>
+  </div>
+  <footer>
+    <p>Адресная книга (Просмотр импортированного списка данных,взаимодействие с удаленной базой данных или автономная работа.)</p>
+  </footer>
+  <div id="editBg"></div>
+</div>
+<div id="editForm">
+  <form name="createForms" novalidate ng-submit="bookCtrlNs.processingForm()">
+    <fieldset>
+      <legend>Редактирование данных пользователя:</legend>
+      <div class="formData">
+        <label for="userName">Name</label>
+        <input type="text" id="userName" name="userName" required placeholder="Mike" autofocus ng-model="bookCtrlNs.templateUser.Name"/>
+      </div>
+      <div class="formData">
+        <label for="emailUser">Email</label>
+        <input type="text" id="emailUser" name="emailUser" required placeholder="my.email@gmail.ru" ng-model="bookCtrlNs.templateUser.Email"/>
+      </div>
+      <div class="formData">
+        <label for="telephoneUser">Telephone</label>
+        <input type="text" id="telephoneUser" name="telephoneUser" required placeholder="+38(099)123-45-67" ng-model="bookCtrlNs.templateUser.Telephone"/>
+      </div>
+      <div class="formData">
+        <label for="streetUser">Street</label>
+        <input type="text" id="streetUser" name="streetUser" required placeholder="Sumskaya" ng-model="bookCtrlNs.templateUser.Street"/>
+      </div>
+      <div class="formData">
+        <label for="addressUser">Address</label>
+        <input type="text" id="addressUser" name="addressUser" required  placeholder="46/19" ng-model="bookCtrlNs.templateUser.Address"/>
+      </div>
+      <div class="formData">
+        <label for="cityUser">City</label>
+        <input type="text" id="cityUser" name="cityUser" required placeholder="Kharkov" ng-model="bookCtrlNs.templateUser.City"/>
+      </div>
+      <div class="formData">
+        <label for="stateUser">State</label>
+        <input type="text" id="stateUser" name="stateUser" required placeholder="Ukraine" ng-model="bookCtrlNs.templateUser.State"/>
+      </div>
+      <div class="formData">
+        <label for="zipUser">Zip</label>
+        <input type="text" id="zipUser" name="zipUser" required  placeholder="61000"  ng-model="bookCtrlNs.templateUser.Zip"/>
+      </div>
+      <div class="formData">
+        <button type="reset" ng-click="bookCtrlNs.resetForm()">Clear</button>
+        <button type="submit" ng-disabled="bookCtrlNs.createForms.$invalid" >Submit</button>
+      </div>
+      <div id="closeForm" ng-click="bookCtrlNs.closeForm()" title="To close a form">
+        <span>X</span>
+      </div>
+    </fieldset>
+  </form>
+</div>
+<div id="messageResponse" class="statusResponseSuccess">
+  <div>
+    <span>Результат работы REST сервиса</span>
+  </div>
+  <div>
+    <span>{{bookCtrlNs.messageResponse}}</span>
+  </div>
+</div>
